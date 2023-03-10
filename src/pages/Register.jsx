@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Button from "../components/Button";
+import FormControl from "../components/FormControl";
 import SectionTitle from "../components/SectionTitle";
 
 const Register = () => {
@@ -10,28 +12,51 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+
+    console.log(formFields);
+
+    //clear state
+    setFormFields({
+      name: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
-    <div className='register flex flex-col justify-center items-center'>
+    <div className='register flex flex-col justify-center items-center mt-10'>
       <div className='register-wrapper flex flex-col gap-5'>
         <SectionTitle title={"Register..."} />
+
         <form onSubmit={handleRegister} className='flex flex-col gap-5'>
-          <div className='form-control flex flex-col gap-2'>
-            <label htmlFor='name' className='cursor-pointer'>
-              Name
-            </label>
-            <input
-              value={formFields.name}
-              onChange={(e) =>
-                setFormFields({ ...formFields, name: e.target.value })
-              }
-              type='text'
-              id='name'
-              placeholder='Write your name'
-              className='border rounded outline-none py-3 px-5 w-[25rem] focus:border-violet-500 duration-300'
-            />
-          </div>
+          <FormControl
+            label='name'
+            labelInner='Name'
+            inputType='text'
+            placeholder='Enter your name'
+            formFields={formFields}
+            setFormFields={setFormFields}
+          />
+
+          <FormControl
+            label='email'
+            labelInner='Email'
+            inputType='email'
+            placeholder='Enter your email'
+            formFields={formFields}
+            setFormFields={setFormFields}
+          />
+
+          <FormControl
+            label='password'
+            labelInner='Password'
+            inputType='password'
+            placeholder='Enter your password'
+            formFields={formFields}
+            setFormFields={setFormFields}
+          />
+
+          <Button text='Register' submit />
         </form>
       </div>
     </div>
