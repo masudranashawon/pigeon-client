@@ -1,3 +1,5 @@
+import React from "react";
+
 const FormControl = ({
   label,
   labelInner,
@@ -25,4 +27,4 @@ const FormControl = ({
   );
 };
 
-export default FormControl;
+export default React.memo(FormControl);

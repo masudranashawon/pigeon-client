@@ -1,7 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useRegister } from "../hooks/useRegister";
+
 import Button from "../components/Button";
 import FormControl from "../components/FormControl";
 import SectionTitle from "../components/SectionTitle";
+import ErrorMessage from "../components/ErrorMessage";
 
 const Register = () => {
   const [formFields, setFormFields] = useState({
@@ -10,17 +13,12 @@ const Register = () => {
     password: "",
   });
 
-  const handleRegister = (e) => {
+  const { register, isLoading, error } = useRegister();
+
+  const handleRegister = async (e) => {
     e.preventDefault();
 
-    console.log(formFields);
-
-    //clear state
-    setFormFields({
-      name: "",
-      email: "",
-      password: "",
-    });
+    await register(formFields.name, formFields.email, formFields.password);
   };
 
   return (
@@ -56,11 +54,13 @@ const Register = () => {
             setFormFields={setFormFields}
           />
 
-          <Button text='Register' submit />
+          <Button text={isLoading ? "Registering..." : "Register"} submit />
+
+          {error && <ErrorMessage error={error} />}
         </form>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default React.memo(Register);
